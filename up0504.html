@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>УП.05.04 Разработка модели архитектуры ИС на примере "Интернет-магазин"</title>
+    <style>
+        body {
+            font-family: Times New Roman, serif;
+            margin: 40px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        h1 {
+            color: #000080;
+            text-align: center;
+            font-size: 24px;
+        }
+        h2 {
+            color: #000080;
+            border-left: 5px solid #000080;
+            padding-left: 10px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #000080;
+            margin-top: 20px;
+        }
+        p {
+            text-align: justify;
+            line-height: 1.4;
+            margin: 10px 0;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+        li {
+            margin: 5px 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .goal {
+            background-color: #f0f8ff;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 3px solid #4682b4;
+        }
+        .model {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 3px solid #666;
+        }
+        .components {
+            background-color: #fffacd;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 3px solid #ffd700;
+        }
+        .diagram {
+            background-color: #f0fff0;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 3px solid #228b22;
+            font-family: monospace;
+        }
+        .highlight {
+            background-color: #ffffcc;
+            padding: 2px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>УП.05: Разработка модели архитектуры ИС на примере "Интернет-магазин"</h1>
+        
+        <div class="goal">
+            <p><strong>Цель:</strong> Спроектировать и отобразить графически основные компоненты системы, их взаимодействие и место в общей структуре.</p>
+        </div>
+
+        <h2>1. Выбор типа архитектуры</h2>
+        <p>Для веб-приложений, таких как интернет-магазин, наиболее распространена <span class="highlight">трехуровневая (трехзвенная) архитектура</span>. Она обеспечивает модульность, масштабируемость и безопасность.</p>
+        
+        <ul>
+            <li><strong>Уровень 1 (Presentation Layer):</strong> Клиентская часть (то, что видит пользователь в браузере).</li>
+            <li><strong>Уровень 2 (Business Logic Layer):</strong> Серверная часть (мозг системы, где выполняются все операции).</li>
+            <li><strong>Уровень 3 (Data Access Layer):</strong> Уровень данных (где хранится информация).</li>
+        </ul>
+
+        <h2>2. Декомпозиция архитектуры на модели (диаграммы)</h2>
+        <p>Одной картинкой архитектуру не описать. Нужно создать несколько взаимосвязанных моделей.</p>
+
+        <div class="model">
+            <h3>Модель 1: Контекстная диаграмма (Диаграмма окружения)</h3>
+            <p><strong>Задача:</strong> Показать, с какими внешними системами и субъектами будет взаимодействовать наша ИС.</p>
+            
+            <div class="components">
+                <strong>Пример для интернет-магазина:</strong>
+                <ul>
+                    <li><strong>Покупатель:</strong> Взаимодействует с системой через браузер.</li>
+                    <li><strong>Платежный шлюз:</strong> Внешняя система для приема платежей (например, ЮKassa).</li>
+                    <li><strong>Курьерская служба:</strong> Внешняя система для передачи данных о доставке и получения трек-номера.</li>
+                    <li><strong>Администратор магазина:</strong> Управляет контентом и заказами через админ-панель.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="model">
+            <h3>Модель 2: Компонентная диаграмма (Логическая архитектура)</h3>
+            <p><strong>Задача:</strong> Показать основные программные модули (компоненты) системы и связи между ними.</p>
+            
+            <div class="components">
+                <strong>Компоненты:</strong>
+                <ul>
+                    <li><strong>Frontend (Клиентское приложение):</strong> Отвечает за отображение интерфейса (React, Vue.js).</li>
+                    <li><strong>Backend (Серверное приложение):</strong>
+                        <ul>
+                            <li><strong>API Gateway:</strong> Единая точка входа для всех запросов.</li>
+                            <li><strong>Модуль аутентификации (Auth):</strong> Регистрация, вход, управление сессиями.</li>
+                            <li><strong>Модуль каталога (Catalog):</strong> Управление товарами, категориями, остатками.</li>
+                            <li><strong>Модуль заказов (Order):</strong> Формирование корзины, оформление и отслеживание заказов.</li>
+                            <li><strong>Модуль оплаты (Payment):</strong> Взаимодействие с платежным шлюзом.</li>
+                            <li><strong>Модуль уведомлений (Notification):</strong> Отправка email и SMS.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Уровень данных (Data Layer):</strong>
+                        <ul>
+                            <li><strong>База данных (PostgreSQL/MySQL):</strong> Основное хранилище структурированных данных.</li>
+                            <li><strong>Кеш (Redis):</strong> Для хранения сессий и временных данных (например, корзина).</li>
+                            <li><strong>Файловое хранилище (S3):</strong> Для изображений товаров и документов.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="model">
+            <h3>Модель 3: Физическая архитектура (Деплоймент-диаграмма)</h3>
+            <p><strong>Задача:</strong> Показать, на каких реальных или виртуальных серверах будут развернуты компоненты системы.</p>
+            
+            <div class="diagram">
+                flowchart TD<br>
+                <br>
+                subgraph Internet [Интернет]<br>
+                &nbsp;&nbsp;direction LR<br>
+                &nbsp;&nbsp;A1[Пользователи]<br>
+                &nbsp;&nbsp;A2[Администраторы]<br>
+                end<br>
+                <br>
+                subgraph DMZ [Демилитаризованная зона&lt;br&gt;DMZ]<br>
+                &nbsp;&nbsp;B1[Балансировщик&lt;br&gt;нагрузки&lt;br&gt;Load Balancer]<br>
+                end<br>
+                <br>
+                subgraph InternalNetwork [Внутренняя сеть]<br>
+                &nbsp;&nbsp;subgraph WebTier [Веб-уровень]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;C1[Веб-сервер 1&lt;br&gt;Nginx]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;C2[Веб-сервер 2&lt;br&gt;Nginx]<br>
+                &nbsp;&nbsp;end<br>
+                <br>
+                &nbsp;&nbsp;subgraph AppTier [Уровень приложений]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;D1[Сервер приложений 1&lt;br&gt;Node.js/Docker]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;D2[Сервер приложений 2&lt;br&gt;Node.js/Docker]<br>
+                &nbsp;&nbsp;end<br>
+                <br>
+                &nbsp;&nbsp;subgraph DataTier [Уровень данных]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;E1[Кластер БД&lt;br&gt;PostgreSQL]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;E2[Сервер кеша&lt;br&gt;Redis]<br>
+                &nbsp;&nbsp;end<br>
+                end<br>
+                <br>
+                Internet --> DMZ<br>
+                DMZ --> WebTier<br>
+                WebTier --> AppTier<br>
+                AppTier --> DataTier
+            </div>
+            
+            <div class="components">
+                <strong>Компоненты:</strong>
+                <ul>
+                    <li><strong>Балансировщик нагрузки (Load Balancer):</strong> Распределяет трафик между веб-серверами.</li>
+                    <li><strong>Веб-серверы (Nginx):</strong> Отдают статический контент (HTML, CSS, JS) и проксируют запросы к серверам приложений.</li>
+                    <li><strong>Серверы приложений (Node.js, Java):</strong> На них развернута бэкенд-логика. Запущены в контейнерах Docker для простоты развертывания.</li>
+                    <li><strong>Кластер БД:</strong> Основная база данных с репликацией для надежности.</li>
+                    <li><strong>Сервер кеша (Redis):</strong> Отдельный сервер для быстрого доступа к временным данным.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="model">
+            <h3>Модель 4: Модель данных (ER-диаграмма)</h3>
+            <p><strong>Задача:</strong> Показать структуру базы данных --- сущности, их атрибуты и связи.</p>
+            
+            <div class="diagram">
+                erDiagram<br>
+                <br>
+                USERS {<br>
+                &nbsp;&nbsp;int id PK<br>
+                &nbsp;&nbsp;string email<br>
+                &nbsp;&nbsp;string password_hash<br>
+                &nbsp;&nbsp;string name<br>
+                }<br>
+                <br>
+                PRODUCTS {<br>
+                &nbsp;&nbsp;int id PK<br>
+                &nbsp;&nbsp;string name<br>
+                &nbsp;&nbsp;text description<br>
+                &nbsp;&nbsp;decimal price<br>
+                &nbsp;&nbsp;int category_id FK<br>
+                }<br>
+                <br>
+                CATEGORIES {<br>
+                &nbsp;&nbsp;int id PK<br>
+                &nbsp;&nbsp;string name<br>
+                }<br>
+                <br>
+                ORDERS {<br>
+                &nbsp;&nbsp;int id PK<br>
+                &nbsp;&nbsp;int user_id FK<br>
+                &nbsp;&nbsp;datetime order_date<br>
+                &nbsp;&nbsp;string status<br>
+                &nbsp;&nbsp;decimal total_amount<br>
+                }<br>
+                <br>
+                ORDER_ITEMS {<br>
+                &nbsp;&nbsp;int id PK<br>
+                &nbsp;&nbsp;int order_id FK<br>
+                &nbsp;&nbsp;int product_id FK<br>
+                &nbsp;&nbsp;int quantity<br>
+                &nbsp;&nbsp;decimal price<br>
+                }<br>
+                <br>
+                USERS ||--o{ ORDERS : "places"<br>
+                CATEGORIES ||--o{ PRODUCTS : "contains"<br>
+                ORDERS ||--o{ ORDER_ITEMS : "consists_of"<br>
+                PRODUCTS }o--o{ ORDER_ITEMS : "included_in"
+            </div>
+        </div>
+
+        <h2>Как оформить в отчете по УП.05</h2>
+        <ol>
+            <li><strong>Введение:</strong> Обоснование выбранного типа архитектуры (трехуровневая, микросервисная).</li>
+            <li><strong>Диаграммы:</strong> Представить все 4 модели с подробными пояснениями к каждому компоненту.</li>
+            <li><strong>Связь с требованиями:</strong> Показать, как архитектура удовлетворяет функциональным и нефункциональным требованиям (например, использование балансировщика нагрузки для обеспечения надежности).</li>
+            <li><strong>Вывод:</strong> Краткое резюме, почему предложенная архитектура является оптимальной для проекта.</li>
+        </ol>
+
+        <p>Эта работа покажет, что вы понимаете не только <span class="highlight">что</span> делать, но и <span class="highlight">как</span> это должно быть реализовано на практике.</p>
+    </div>
+</body>
+</html>
